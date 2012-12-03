@@ -1,0 +1,17 @@
+1. Crawler
+	- Have the crawler go through a list of domain names and check the certificates of each one
+	- What information should be checked:
+		- compare domain name in the list with the one in the certificate
+		- check notBefore and notAfter dates for accuracy
+		- check signing authority??
+		- Others
+	- Establish protocol of comunication with the Database Server
+		- There are some simple schemes in sequence.png
+	- What information should be sent to the Database Server to be stored
+		- Domain Name, notBefore, notAfter, serial number
+2. Database Server
+	- ER model (modelo EA)
+	- What queries will be needed/run on the database
+
+3. Plugin
+	- Everything!
