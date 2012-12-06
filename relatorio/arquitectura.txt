@@ -1,0 +1,23 @@
+Tema: Certificate Pinning
+
+Crawler server (Python/Bash/Perl)
+- conjunto de scripts para efectuar a procura de certificadps de acrodo com os registos presentes na DB
+- verificar info whois entre DNS e IP ou usar OpenDNS
+
+Base de Dados (Python/MYSQL)
+- recebe os pedidos do Browser e regista o nome
+- responde com dados existentes caso tenha o registo
+- devolve NULL caso se trate de um novo registo
+- guardar o DNS, IP e hash do certificado(fingerprint do certificado)
+
+Plugin para Browser(Javascript)
+- para cada endereço inserido pelo utilizador vai obter o certificado e obter a hash do mesmo
+- envia para a database o pedido para obter os dados relativos ao DNS
+- responde ao utilizador com a abertura da página caso esteja o certificado devidamente actualizado
+- responde com aviso caso exista erro de certificado
+- caso se trate de uma página para a qual ainda não existe registo ele devolve essa informação
+
+Evaluation:
+- Necessário fazer fake site para simular o funcionamento da aplicação usando exemplo local (passa por fazer uma página e definir o certificado para os cenários considerados)
+- Analisar possíveis falhas de segurança na comunicação entre os vários elementos intervenientes e descrever os condicionantes de segurança, admitindo cliente como qualquer segurança.
+
