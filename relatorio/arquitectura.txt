@@ -17,6 +17,20 @@ Plugin para Browser(Javascript)
 - responde com aviso caso exista erro de certificado
 - caso se trate de uma página para a qual ainda não existe registo ele devolve essa informação
 
+Funcionalidade a desenvolver ao nível da aplicação cliente
+1- saber como ele vai buscar previamente o certificado antes de carregar a
+página
+2- colocar uma página intermédia a dizer "A verificar certificado..."
+3- ver a forma como se pode delegar a função para comunicação com o servidor
+(misturar java com python na comunicação ssl pode dar bronca)
+4- no final depois de receber o resultado apresentar uma de 3 páginas:
+4.1- carrega a página porque o certificado é válido e guarda-o durante a
+sessão actual
+4.2- mostra página a dizer que o certificado não é válido com a opção para o
+cliente poder ainda assim carregar a página
+4.3- mostra página a dizer que o site ainda não consta na BD e que não foi
+possível fazer a verificação (é adicionado nesse momento à BD)
+
 Evaluation:
 - Necessário fazer fake site para simular o funcionamento da aplicação usando exemplo local (passa por fazer uma página e definir o certificado para os cenários considerados)
 - Analisar possíveis falhas de segurança na comunicação entre os vários elementos intervenientes e descrever os condicionantes de segurança, admitindo cliente como qualquer segurança.
