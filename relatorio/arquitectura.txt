@@ -44,3 +44,5 @@ Evaluation:
 - Necessário fazer fake site para simular o funcionamento da aplicação usando exemplo local (passa por fazer uma página e definir o certificado para os cenários considerados)
 - Analisar possíveis falhas de segurança na comunicação entre os vários elementos intervenientes e descrever os condicionantes de segurança, admitindo cliente como qualquer segurança.
 
+
+
