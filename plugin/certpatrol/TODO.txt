@@ -1,0 +1,198 @@
+See also http://psyced.org:33333/@patrol?scratchpad
+
+http://thedropbox.acmetoy.com/documents/BHUSA09-Sotirov-AttackExtSSL-PAPER.pdf
+
+======/--------
+TODO / WISHLIST
+====/----------
+
+ ? blacklist of untrustworthy CAs? (can't you just remove them?)
+   jmd says: the possibility to configure a watch string wenever you access
+	     a site that uses a certification path where one of the CA
+	     matches this string, you would get a specific warning so you
+	     could avoid specifically that CA even if it tried to hide itself
+	     behind a hierarchy of subca with innocent names
+ ? give feedback about quality of cipher being used
+ + support for other protocols than https:
+    + currently certpatrol in messengers like thunderbird only
+      serves the purpose of handling https: links in e-mails
+      and such. would be cooler if SMTP and IMAP certificates
+      were actually checked.
+      Haven't found an API yet that allows to do that.
+ + detect forms in the document that carry an https: action and
+   warn if the host mentioned in that action isn't in our database
+   yet (= we haven't shown the certificate to our user yet)
+     We could do this with an additional HTTP observer but this won't solve the
+     issue entirely as the cert could have changed since our last visit.
+     Or we could show an alert with a cancel button when the POST destination
+     is not the same as the current host?
+ ? we could show expiry in locale text style
+   but is it actually better than iso?
+   sometimes javascript can't parse mozilla's certificate date formats.. #fail
+ + provide a preset sqlite database with most popular certificates
+ + make PSYC streams out of incoming certificates as seen at
+   the https://www.eff.org/observatory ?
+
+=== FEEDBACK ===
+
+TO WHITELIST OR NOT TO WHITELIST?
+    Richard Boyce: An essential add-on, but it makes using SSL for Google Search very awkward, because this add-on issues a warning every time an "early" change of Google certificate takes place. One solution would be an option to suppress a warning about an early change if the CA has not changed.
+    Daniel Kauffman: A good add-on... BUT... sites providing multiple certificates for the same domain give false positives. Many of these false positives could be avoided if old (but unexpired) certificates were remembered after new certificates were accepted -- there is no harm switching between certificates that have already been accepted.
+    laxeraend: https://chaseonline.chase.com/ change their cert on nearly every request.  There needs to be a configurable exceptions list in CertPatrol to exclude such sites from showing constant intrusive alerts.
+
+by Kevin Jacobs on April 25, 2011 #
+    I like it, but one suggestion would be to make the dropdown notifications specific to the tab they were generated from - using something like gBrowser.getNotificationBox(gBrowser.getBrowserForDocument(aDocument)); -- It's a little annoying getting the notifications when I open a bunch of new tabs (when I'm not looking at those tabs yet)
+
+    https://developer.mozilla.org/En/How_to_check_the_security_state_of_an_XMLHTTPRequest_over_SSL
+
+kevin8t8 sagt: https://developer.mozilla.org/en/nsIWebProgressListener talks about the states the listener goes through
+kevin8t8 sagt: Interesting line is "For any given request, onStateChange  is called once with the STATE_START flag, zero or more times with the STATE_TRANSFERRING flag or once with the STATE_REDIRE
+CTING  flag, and then finally once with the STATE_STOP flag."
+
+kevin8t8 sagt: Wonder if we can do document.defaultView.QueryInterface(Components.interfaces.nsIHttpChannel)
+kevin8t8 sagt: and if that's at all similar to the channel proprety from the previous url
+
+stfn sagt: lynX: hi, I've recently started using certpatrol in FF 3.6.  When I open a URL like https://code.google.com/p/bitstring/ in a new tab by middle clicking a link on a page like http://news.ycombinator.com/item?id=2315564 I get the certpatrol info bar (with the view details button, etc.) on tab with the link, not the tab where I loaded that certificate.
+stfn fragt: lynX: if I'm not going to read that page until I'm done with the current one then it's a distraction.  If I open multiple tabs in the background, what happens to the info bar for subsequent links?
+tg sagt: lynX: try passing a browser param to getNotificationBox
+tg sagt: in outchange & outnew
+tg sagt: as i see you already have that browser var there, just pass it on..
+
+canwehavenicethings:
+    Would be nice to have some synchronization to detect certificate changes across networks (maybe via saving data to bookmarks like NoScript does).
+
+== VERSION 0.6 ==
+
+This version has been improved to show and store the complete information about certificates, which makes it a lot more useful when a certificate is updated: You can now decide for yourself if expiry was due, if a change of issuer is acceptable, or if a phone call to the affected company is appropriate to get a voice confirmation of such a new certificate. We have tentatively added support for Thunderbird, Songbird, SeaMonkey, Mozilla and Fennec. Concerning Firefox, this version is a release candidate for Certificate Patrol 1.0 as this version implements all we expect from a 1.0.
+
+== VERSION 0.7 ==
+
+Allow to copy & paste data from pop-up.
+
+== VERSION 1.0 ==
+
+Nothing changed. Version 0.7 has proven to be super stable,
+therefore we move from "release candidate" directly to 1.0.
+
+== VERSION 1.1 ==
+
+Some tweaks in the dialog GUI and a fix for a rare race condition
+that has been reported to us by honeybee. Thanks!
+Good luck with your factorbee!!!!  ;)
+
+== VERSION 1.2 ==
+
+Patrol now gives a few hints on what may be wrong about
+a certificate change, like expiry not being due or issuer
+having changed and it makes an estimate on a possible
+threat level.
+
+Also, validity dates are shown using ISO standard notation
+as the American mm/dd/yy order used by X.509 is quite
+confusing for everybody else.
+
+== VERSION 1.2.3 ==
+
+Expiration and issuance dates are also shown as number of
+days in the future or past from now.
+
+== VERSION 1.2.4 ==
+
+Attempted fix for the date display.
+
+== VERSION 1.3 ==
+
+Display events of lesser importance using notification
+boxes. Allow to return to old behaviour using option
+switches in the new Preferences dialog.
+
+Fix for the date display problem.
+
+== VERSION 1.3.1 ==
+
+Sticking to old behaviour by default, making the
+notification boxes optional.
+
+== VERSION 1.2.5 ==
+
+Fix for the date display.
+Further enhancements postponed.
+## because of errors that only arise on other people's installations.
+## Very strange.
+
+== VERSION 1.3.5beta ==
+
+Display events of lesser importance using optional notification boxes.
+
+Bugfixes: Updated old-school preferences file.
+More careful with prefs being available at all.
+
+== VERSION 1.2.6 AND 1.3.6beta ==
+
+Fix for a race condition that may get certificates confused on
+some platforms in some funny situations.
+
+ + use the patrol icon
+ - use window load hook instead of DOM
+
+== VERSION 1.2.7 AND 1.3.7beta ==
+
+Unterstützung für deutschen Firefox repariert.
+
+The German prefs.dtd looked as if it was UTF-8-encoded but it was
+in fact in ISO-8859-1, thus it didn't work. And I thought something
+muuuch more complicated would be the source of the problems with
+the German version of CP. Suggestion to the Mozilla Team: Check the
+encoding of uploaded files automatically, as we weren't the first
+to run into this problem. Coralietab was there, too.
+
+== VERSION 1.4 ==
+
+1.3.7beta upgraded to 1.4.
+Preferences inverted: No pop-ups by default.
+
+Sorry should this annoy any users that got used to the old behaviour,
+but there has been so much criticism about so-called 'false positives'
+that it should better be the default not to show pop-ups for unimportant
+events. Just change the preferences if you're paranoid like me.
+
+== VERSION 1.5beta ==
+
+Adding a wildcard certificate recognition approach from Georg Koppen.
+Also trying out new threat policy to handle confused server farms.
+
+== VERSION 1.9beta up to 2.0 ==
+
+ + Since the hierarchy of certification authorities is the safest information
+   we have about certificates, we now store it entirely and show it first,
+   even before the text, which has been put into the certificate and may be
+   falsified if the hierarchy is bogus. We explain this in more detail on
+   our website.
+ + We now use "HTTP observers" instead of web page "onLoad" which means that
+   now we check every single included element on a page, so you may be seeing
+   certificates for servers you didn't know you were visiting before.
+ + Added a checkbox to the change dialog for "checking issuer only" in future,
+   this helps with annoying domains that run on messed up certificates. As
+   long as they don't mess with the certification hierarchy, it's okay.
+ + We allow users to reject a new or changed certificate. This won't stop
+   the loading of the page, since we are not in charge of that, but it will
+   warn you again, next time you bump into the same bogus website.
+ + Added a checkbox to the preferences dialog for allowing CertPatrol to save
+   certificates in Private Browsing Mode.
+ + Added CertPatrol to the 'Clear Recent History' dialog which deletes
+   recently inserted/updated or all certs from the DB.
+ + Added CertPatrol to the Certificate Manager dialog where you can view and
+   delete the certificates stored by CertPatrol.
+ + The dialogs have been reorganized, the change dialog has a diff-like layout
+   so you don't have to compare the certificates yourself. Patrol does it for
+   you and tells you what has changed.
+ + We added green/yellow/red threat level indicators.
+ + By adopting the standard certificate view details wizards, you can look
+   at certificates in every little detail and also export certificates into
+   a file on your desktop.
+
+this is not about us.. should go to website maybe?
+     Or install the Cert Viewer Plus extension which adds a 'View PEM' button
+     to the view cert dialog that shows a window with the cert info in both
+     human & machine readable format.
+

@@ -1,0 +1,46 @@
+Tema: Certificate Pinning
+
+Crawler server (Python/Bash/Perl)
+- conjunto de scripts para efectuar a procura de certificadps de acrodo com os registos presentes na DB
+- verificar info whois entre DNS e IP ou usar OpenDNS
+
+Base de Dados (Python/MYSQL)
+- recebe os pedidos do Browser e regista o nome
+- responde com dados existentes caso tenha o registo
+- devolve NULL caso se trate de um novo registo
+- guardar o DNS, IP e hash do certificado(fingerprint do certificado)
+
+Plugin para Browser(Javascript)
+1- para cada endereço inserido pelo utilizador vai obter o certificado e obter a hash do mesmo
+2- envia para a database o pedido para obter os dados relativos ao DNS
+3.1- responde ao utilizador com a abertura da página caso esteja o certificado devidamente actualizado
+3.2- responde com aviso caso exista erro de certificado
+3.3- caso se trate de uma página para a qual ainda não existe registo ele devolve essa informação
+Rick's log:
+Ele obtem certificados de uma base de dados qualquer.
+Suspeito que ele verifica se o certificado actual já está nessa base de dados.
+Encontrei o 'main' desta coisa, é o CertPatrol.pjs. Como é habitual em coisas web a primeira função executada é o onLoad(); Alguns dos outros modulos utilizam funções deste 'main'.
+Penso que encontrei onde ele obtem o certificado: {L:419[var cert = st.serverCert;], em que st é o serverStatus do securityInfo do channel que é passado à função observe};
+Após ele obter esse cert (não sei que informações contem) ele cria um objecto que alem de receber os dados do cert também tem registado o host, a cifra, o comprimento da chave publica e o comprimento da chave privada.
+De seguida ele passa à verificação do certificado em certCheck. Curiosamente esta função tem um TODO comentado que corresponde a algo parecido ao que estamos a implementar. Penso que seja aqui que faz sentido implementar a nossa parte do plugin.
+
+
+
+Funcionalidade a desenvolver ao nível da aplicação cliente
+1- saber como ele vai buscar previamente o certificado antes de carregar a
+página
+2- colocar uma página intermédia a dizer "A verificar certificado..."
+3- ver a forma como se pode delegar a função para comunicação com o servidor
+(misturar java com python na comunicação ssl pode dar bronca)
+4- no final depois de receber o resultado apresentar uma de 3 páginas:
+4.1- carrega a página porque o certificado é válido e guarda-o durante a
+sessão actual
+4.2- mostra página a dizer que o certificado não é válido com a opção para o
+cliente poder ainda assim carregar a página
+4.3- mostra página a dizer que o site ainda não consta na BD e que não foi
+possível fazer a verificação (é adicionado nesse momento à BD)
+
+Evaluation:
+- Necessário fazer fake site para simular o funcionamento da aplicação usando exemplo local (passa por fazer uma página e definir o certificado para os cenários considerados)
+- Analisar possíveis falhas de segurança na comunicação entre os vários elementos intervenientes e descrever os condicionantes de segurança, admitindo cliente como qualquer segurança.
+

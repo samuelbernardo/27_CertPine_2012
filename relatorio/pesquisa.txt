@@ -1,0 +1,32 @@
+certificate pinning:
+http://scarybeastsecurity.blogspot.pt/2011/04/fiddling-with-chromiums-new-certificate.html
+http://googleonlinesecurity.blogspot.pt/2011/04/improving-ssl-certificate-security.html
+
+public key pinning (HSTS preloading):
+http://www.imperialviolet.org/2011/05/04/pinning.html
+http://dev.chromium.org/sts
+
+browser plugin reference:
+http://patrol.psyced.org/
+http://rgaucher.info/planet/author/Jay_
+http://www.governmentsecurity.org/forum/topic/28359-get-dns-by-ip/
+http://stackoverflow.com/questions/6611298/in-python-getting-more-info-about-an-ip-address
+http://thomasfischer.biz/?p=259
+
+servidor para cache de certificados:
+http://code.google.com/p/namebench/
+http://www.dnspython.org/
+http://packages.python.org/pyOpenSSL/
+
+site crawler:
+http://code.google.com/p/pywhois/
+http://www.ehow.com/how_12073769_code-whois-lookup-python.html
+http://www.ehow.com/how_8671013_resolve-ip-python.html
+
+Simple TCP/IP server examples:
+JSON http://thomasfischer.biz/?p=622
+ruby http://thomasfischer.biz/?p=122
+
+datbase:
+http://dev.mysql.com/doc/connector-python/en/index.html
+http://java-source.net/open-source/database-engines
