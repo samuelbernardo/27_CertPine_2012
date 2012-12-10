@@ -23,6 +23,8 @@ Encontrei o 'main' desta coisa, é o CertPatrol.pjs. Como é habitual em coisas we
 Penso que encontrei onde ele obtem o certificado: {L:419[var cert = st.serverCert;], em que st é o serverStatus do securityInfo do channel que é passado à função observe};
 Após ele obter esse cert (não sei que informações contem) ele cria um objecto que alem de receber os dados do cert também tem registado o host, a cifra, o comprimento da chave publica e o comprimento da chave privada.
 De seguida ele passa à verificação do certificado em certCheck. Curiosamente esta função tem um TODO comentado que corresponde a algo parecido ao que estamos a implementar. Penso que seja aqui que faz sentido implementar a nossa parte do plugin.
+O certCheck começa por obter a versão do certificado que está na bd para comparar com a versão que obteve do site.
+No final da função ele regista o cert novo na bd: Tanto quanto me parece ele envia tudo em strings UTF8, mas ainda tnh de esmiferar isto melhor.
 
 
 
@@ -43,6 +45,4 @@ possível fazer a verificação (é adicionado nesse momento à BD)
 Evaluation:
 - Necessário fazer fake site para simular o funcionamento da aplicação usando exemplo local (passa por fazer uma página e definir o certificado para os cenários considerados)
 - Analisar possíveis falhas de segurança na comunicação entre os vários elementos intervenientes e descrever os condicionantes de segurança, admitindo cliente como qualquer segurança.
-
-
 
