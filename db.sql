@@ -10,10 +10,9 @@ CREATE TABLE certs (
 	CHECK (timesChecked > 0)
 );
 
-CREATE TABLE certs (
+CREATE TABLE certsData (
 	serialNumber varchar(255) NOT NULL,
 	issuerName varchar(255) NOT NULL,
 	rawData text NOT NULL,
-	PRIMARY KEY (serialNumber, issuerName),
-	CHECK (timesChecked > 0)
+	PRIMARY KEY (serialNumber, issuerName)
 );
