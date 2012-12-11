@@ -1,0 +1,36 @@
+
+<title>ibiza : prep : developers</title>
+
+<body bgcolor="#339966" link="#ff3333" vlink="#cc0066">
+<center><table cellpadding=9 bgcolor="#33cc99" width=444><tr><td align=right>
+
+<font size=9>prep/dev</font><br>
+<font size=4>guide for perlists</font><p>
+
+</td></tr><tr><td>
+
+<b>prep</b> is described in the <a href=prep.html>prep for
+users</a> document. this document describes how to write #require'able 
+extensions to prep, but you should better look at an
+<a href=docibiza.pl>example</a> while you read this.
+
+<p>first you need to enter the 'prep' namespace saying
+<pre>	package prep;	</pre>
+
+<p>then you can define subs called <b>do_&lt;command&gt;</b> which
+either print something (if used as instructions) or return
+something (if used as insertions).
+
+<p>you can also provide a set of static insertions by
+defining $prep::VAR{"&lt;variableName&gt;"} = &lt;value&gt;
+as for instance in $prep::VAR{ROOT} = $ENV{DOCUMENT_ROOT}.
+
+<p>sub <b>done</b> is called at the end of parsing a source
+file, so you can do trailing output like closing html tables.
+
+<p>larry wall requires you to end your perl file with "<b>1;</b>",<br>
+so don't forget it.
+
+<p>the source code of prep itself resides in ibiza/lib/prep.pl.
+
+</td></tr></table></center>

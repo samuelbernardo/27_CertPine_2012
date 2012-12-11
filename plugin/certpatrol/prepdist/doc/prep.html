@@ -1,0 +1,150 @@
+
+<title>ibiza : prep</title>
+
+<body bgcolor="#339966" link="#ff3333" vlink="#cc0066">
+<center><table cellpadding=9 bgcolor="#33cc99" width=444><tr><td align=right>
+
+<font size=9>prep</font><br>
+<font size=4>the ibiza preprocessor</font><p>
+
+</td></tr><tr><td>
+
+<b>prep</b> evolved from a perl script that i wrote sometime in 1993
+to manage my trilingual <a href="http://my.pages.de/">homepage</a>.
+since i found it so useful i
+generalized it and even used it for unix systems administration.
+
+<p>it has found it's way into <a href=ibiza.html>ibiza</a> as late as
+1998 after realizing that my early hands-on approach was overall
+more readable, flexible and understandable than trying to be
+"standards-compliant" using SGML (the XML predecessor) mixed with
+hard-to-distinguish HTML code.
+
+<p>prep consists of about ridiculous 180 lines of code, that do a
+simple job pretty well.
+there are hundreds of ways to manage HTML document trees, this
+is yet another. this is how it works:
+
+<p>just write your text in your desired output format, typically
+HTML, and intersperse prep commands as needed. there are 3 types
+of prep commands.
+
+<ol>
+<a name=selectors><h4><li>line by line selectors</h4>
+
+i needed a practical syntax for keeping multiple languages in
+a single file. this is what i picked:
+
+<pre>	D)Dies ist ein deutscher Text.
+	I)Questo è un testo italiano.
+	E)This is english text.
+	F)Ça c'est en français.
+</pre>
+
+the flags to be used are defined by the project at hand, or
+not defined at all. so they need not necessarily be bound to languages,
+although some flags are set automatically if the output file contains
+the two-character ISO language code of a language,
+as for instance in <b>index.en.html</b>.
+
+
+<a name=instructions><h4><li># instructions</h4>
+
+chosen to look familiar, prep supports #if, #else, #endif, #include etc.
+but most importantly they can be extended with local instructions
+like #foo or #bar for the project at hand, or even for the current directory.
+these are the built-in instructions:
+
+<p><dl>
+<dt><b> #include &lt;filename&gt; </b>
+<dd>this will fetch a file from the current directory and process it
+inline, including any prep commands if found.
+
+<dt><b> #if &lt;flag&gt; </b>
+<dd>currently the #if / #else / #endif logic operates with the
+single-letter flags also used for language selection, so you
+can make a whole part of the document appear only in the german
+rendition for instance. very practical is the <b>#if 0</b> (if zero)
+construct to comment out a large portion of a document.
+
+<dt><b> #endif or #fi </b>
+<dd>terminate the portion of the document affected by the last #if.
+you can nest #if/endif's at will. #fi is the computer scientists
+way of saying #endif. it's the word backwards. you can use both.
+
+<dt><b> #else </b>
+<dd>used if the #if condition did not apply
+
+<dt><b> #if !&lt;flag&gt; </b>
+<dd>= if not
+
+<dt><b> #define &lt;flag&gt; </b>
+<dd>usually not useful
+
+
+<dt><b> #require &lt;extension&gt; </b>
+<dd>looks for an &lt;extension&gt;.pl file to contain perl functions
+that extend the prep instruction set according to the needs of the project.
+
+</dl>
+
+<a name=insertions><h4><li>((())) insertions</h4>
+
+insertions have unusual looks: a command, optionally with arguments, surrounded
+by triple braces. i chose the syntax for two reasons, it's unlikely to appear
+in a regular document and it sticks out of the crowd of HTML statements.
+the commands are typically defined for the project at hand. the difference
+to # instructions is that the result of the command is inserted inline
+into the output document. insertions can be used in the middle of HTML
+markup, even define parts of the url of a link or image. there are no
+built-in insertions as yet.
+
+</ol>
+
+<a name=continuation><h4>line continuation</h4>
+
+if for some reason you want to have the next line of text in
+the output file to be attached to the current line without a newline
+inbetween, just place a \ (backslash) at the end of the line.
+you usually won't need this, but here's an example:
+
+<pre>	&lt;a href=home.html&gt;\ 
+	E)Homepage\ 
+	D)Startseite\ 
+	&lt;/a&gt;
+</pre>
+
+This makes a link multilanguage without producing ugly
+linked whitespace.
+
+<a name=arguments><h4>multiple arguments</h4>
+
+both # and ((())) commands may have more than one argument. arguments are
+seperated in an unusual way: a comma followed and <i>preceded</i> by
+an empty space, like this:
+<pre>	#&lt;command&gt; &lt;arg1&gt; , &lt;arg2&gt; ...</pre>
+This permits you to make a sentence containing a comma a normal argument, as
+in this example:
+<pre>	#box http://mp3.pages.de , Funk, Soul, Phorever</pre>
+The box function may then produce something like this:<p>
+
+<div align=center><table bgcolor=black cellspacing=0 border=0><tr><th>
+<table bgcolor=white cellspacing=0 border=0><tr><th>
+<table bgcolor="#ffcc66" cellpadding=3 cellspacing=0 border=0><tr><td>
+<a href="http://mp3.pages.de"><img src=internal-gopher-menu border=0></a>
+Funk, Soul, Phorever
+</td></tr></table>
+</th></tr></table>
+</th></tr></table></div>
+
+<p>as an often recurring stylistic item of your website.
+this is how the rounded boxes on
+<a href="http://www.ZEIT.de/nacht/freizeit.html">www.zeit.de</a>
+were done, by the way.
+
+<a name=perlists><h4>perlists info</h4>
+
+More detailed information on how to write prep extensions
+is in the <a href=prepdev.html>prep for developers</a> document.
+
+</td></tr></table></center>

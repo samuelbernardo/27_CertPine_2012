@@ -1,0 +1,15 @@
+
+Yet another website management tool.
+
+In fact I also use it for certain
+system administration tasks.
+
+Typically perl.
+
+Installation:
+    prep needs to find its prep.pl in /usr/local/lib/prep
+    or in ~/lib/prep with ~ being your home directory.
+    Other than that, you can put it anywhere.
+
+-symlynX.com
+
