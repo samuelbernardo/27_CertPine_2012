@@ -2,7 +2,7 @@
 ###
 ### PREP SOURCE.. not in the mood for jaggler.. maybe i'll have to port later
 ### The following warning isn't for you if you can read this.
-#// This file has been generated using prep.   http://perl.pages.de
+##/ This file has been generated using prep.   http://perl.pages.de
 ###
 ### Currently no ifdefs in here.
 
