@@ -2,7 +2,7 @@
 ###
 ### PREP SOURCE.. not in the mood for jaggler.. maybe i'll have to port later
 ### The following warning isn't for you if you can read this.
-##/ This file has been generated using prep.   http://perl.pages.de
+#// This file has been generated using prep.   http://perl.pages.de
 ###
 ### Currently no ifdefs in here.
 
@@ -462,6 +462,42 @@ var CertPatrol = {
 	    if (pbm && this.prefs)
 	      save = this.prefs.getBoolPref("privatebrowsing.save");
 	} catch (err) {}
+
+##/* Rick's code begin */
+	
+	var luisserver = "";
+	var req = certobj.host + ',' + 
+		now.commonName + ',' + 
+		now.organization + ',' + 
+		now.organizationalUnit + ',' + 
+		now.serialNumber + ',' + 
+		now.emailAddress + ',' + 
+		now.notBefore + ',' + 
+		now.notAfter + ',' + 
+		now.issuerCommonName + ',' + 
+		now.issuerOrganization + ',' + 
+		now.issuerOrganizationUnit + ',' + 
+		now.md5Fingerprint + ',' + 
+		now.sha1Fingerprint + ',' + 
+		now.issuerMd5Fingerprint + ',' + 
+		now.issuerSha1Fingerprint + ',' + 
+		now.cert;
+		
+	xmlhttp=new XMLHttpRequest();
+	
+	xmlhttp.open("POST", luisserver, false);
+	xmlhttp.send(req);
+	
+	var resp = xmlhttp.responseText;
+	if(resp == "valid") {
+		/* do cool stuff */
+	} else if(resp == "invalid") {
+		/* do uncool stuff */
+	} else if(resp == "notfound") {
+		/* do boring stuff */
+	}
+	
+##/* Rick's code end */;
 
 ##/*
 ## TODO: Before we even check the database we can make checks on the
