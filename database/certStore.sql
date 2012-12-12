@@ -5,7 +5,8 @@ CREATE TABLE certs (
   issuerName varchar(255) NOT NULL,
   domainName varchar(255) NOT NULL,
   issuerName varchar(255) NOT NULL,
-  issuerName varchar(255) NOT NULL,
+  notBefore varchar(255) NOT NULL,
+  notAfter varchar(255) NOT NULL,
   timesChecked int,
   valid int,
   PRIMARY KEY (serialNumber, issuerName),
@@ -15,7 +16,7 @@ CREATE TABLE certs (
 CREATE TABLE certs (
   serialNumber varchar(255) NOT NULL,
   issuerName varchar(255) NOT NULL,
-  rawData varchar(5000) NOT NULL,
+  rawData text NOT NULL,
   PRIMARY KEY (serialNumber, issuerName),
   CHECK (timesChecked > 0)
 );
