@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+#!/usr/local/bin/perl
+#
+# PREP:
+#				the PRE Processor (smart name, ain't it?)
+# written by Carlo von Loesch
+#				(symLynX@prep.pages.de, http://my.pages.de/)
+#
+# allows flags to be passed as args
+# knows hierarchical #if/#else/#endif constructs
+# also knows #ifn
+# knows #include
+# knows #require to extend the # command set (#doctype is also accepted)
+# removes # comments
+# knows X) flag prefixes
+# knows XY) combined flag prefixes
+# knows "#pragma or" to apply OR instead of AND with combined-flag-prefixes
+
+#require "getopt.pl";
+#&Getopt('r');
+
+# these should not need to be changed
+
+package prep;
+#require "$opt_r.pl" if $opt_r;
+
+$HOME = $ENV{'HOME'}.'/lib/prep';
+#HOME = $ENV{'HOME'}.'.prep';
+
+unshift @'INC, $HOME, '/usr/local/lib/prep', '/usr/depot/lib/prep';
+
+package main;
+
+$SIG{__DIE__} = \&die;
+require 'prep.pl';
+
+my $file = shift;
+my $flags;
+
+if ($file and not -r $file) {
+	$flags = $file;
+	$file = shift;
+}
+if ($file) {
+	$ft = $1 if $file =~ /\.(\w+)$/;
+	require "$ft.pl" if -r "$ft.pl";
+} else {
+	my $save = $/;
+	undef $/;
+	$data = <>;
+	$/ = $save;
+}
+
+&prep'run($file, $flags, $data);
+exit;
+
+
+
+sub die {
+	my $text = join('', @_);
+	$text =~ s/ at \S+ line \d+\.\s+$//;
+        select STDERR;  # just in case we're in a select..
+        print <<X;
+$text
+
+X
+	my $i = 0; my @c;
+	while(@c = caller($i++)) {
+		print $c[6] ? <<Xe : <<Xn;
+eval($c[6]) in $c[1] line $c[2]
+Xe
+$c[3] in $c[1] line $c[2]
+Xn
+        }
+        exit;
+}
+
+1;
