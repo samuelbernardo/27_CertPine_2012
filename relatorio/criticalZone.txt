@@ -1,0 +1,5 @@
+Zona crítica:
+- comunicação crawler-servidor (entendido como estando no domínio de rede local)
+- man in the middle entre cliente e servidor necessita de PKI (usa-se os registos guardados localmente)
+- DB isolada da rede exterior (contém a informação sobre os certificados recolhidos e dos dns encontrados
+
